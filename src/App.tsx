@@ -1,5 +1,4 @@
-import AddTodoForm from './components/AddTodoForm'
-import TodoItemContainer from './components/TodoItemContainer'
+import TodoContainer from './components/TodoContainer'
 import TopBar from './components/TopBar'
 
 function App() {
@@ -8,8 +7,7 @@ function App() {
       <div className='w-96 pt-20 mx-auto'>
         <div className='shadow-md'>
           <TopBar />
-          <TodoItemContainer />
-          <AddTodoForm />
+          <TodoContainer />
         </div>
       </div>
     </div>
