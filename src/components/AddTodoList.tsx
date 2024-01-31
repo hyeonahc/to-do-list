@@ -1,24 +1,24 @@
 import { ChangeEvent, useState } from 'react'
 
 interface TaskInputProps {
-  onAddTask: (newTask: string) => void
+  handleAddTask: (newTask: string) => void
 }
 
-const AddTodoForm: React.FC<TaskInputProps> = ({ onAddTask }) => {
+const AddTodoList: React.FC<TaskInputProps> = ({ handleAddTask }) => {
   const [inputValue, setInputValue] = useState<string>('')
 
   const handleInputChange = (e: ChangeEvent<HTMLInputElement>) => {
     setInputValue(e.target.value)
   }
 
-  const handleKeyPress = (event: React.KeyboardEvent<HTMLInputElement>) => {
-    if (event.key === 'Enter') {
+  const handleKeyPress = (e: React.KeyboardEvent<HTMLInputElement>) => {
+    if (e.key === 'Enter') {
       handleClickAdd()
     }
   }
 
   const handleClickAdd = () => {
-    onAddTask(inputValue)
+    handleAddTask(inputValue)
     setInputValue('')
   }
 
@@ -42,4 +42,4 @@ const AddTodoForm: React.FC<TaskInputProps> = ({ onAddTask }) => {
   )
 }
 
-export default AddTodoForm
+export default AddTodoList

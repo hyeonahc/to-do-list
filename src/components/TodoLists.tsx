@@ -4,7 +4,7 @@ interface TasksProps {
   tasks: string[]
 }
 
-const TodoItemList: React.FC<TasksProps> = ({ tasks }) => {
+const TodoLists: React.FC<TasksProps> = ({ tasks }) => {
   return (
     <ul className='mt-2'>
       {tasks.map((task, index) => (
@@ -27,4 +27,4 @@ const TodoItemList: React.FC<TasksProps> = ({ tasks }) => {
   )
 }
 
-export default TodoItemList
+export default TodoLists

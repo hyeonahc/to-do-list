@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react'
-import AddTodoForm from './AddTodoForm'
-import TodoItemList from './TodoItemList'
+import AddTodoList from './AddTodoList'
+import TodoLists from './TodoLists'
 
 const TodoContainer = () => {
   const [tasks, setTasks] = useState<string[]>([])
@@ -24,8 +24,8 @@ const TodoContainer = () => {
 
   return (
     <div className='flex flex-col	justify-between	bg-white h-96'>
-      <TodoItemList tasks={tasks} />
-      <AddTodoForm onAddTask={handleAddTask} />
+      <TodoLists tasks={tasks} />
+      <AddTodoList handleAddTask={handleAddTask} />
     </div>
   )
 }
