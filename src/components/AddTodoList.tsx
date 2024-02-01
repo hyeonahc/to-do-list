@@ -1,10 +1,10 @@
 import { ChangeEvent, useState } from 'react'
 
-interface TaskInputProps {
+interface AddTodoListProps {
   handleAddTask: (newTask: string) => void
 }
 
-const AddTodoList: React.FC<TaskInputProps> = ({ handleAddTask }) => {
+const AddTodoList: React.FC<AddTodoListProps> = ({ handleAddTask }) => {
   const [inputValue, setInputValue] = useState<string>('')
 
   const handleInputChange = (e: ChangeEvent<HTMLInputElement>) => {

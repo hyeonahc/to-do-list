@@ -15,6 +15,12 @@ const TodoContainer = () => {
     }
   }
 
+  const handleRemoveTask = (indexToRemove: number): void => {
+    const newTasks = tasks.filter((_, index) => index !== indexToRemove)
+    setTasks(newTasks)
+    localStorage.setItem('tasks', JSON.stringify(newTasks))
+  }
+
   useEffect(() => {
     const getStoredTasks = localStorage.getItem('tasks')
     if (getStoredTasks) {
@@ -24,7 +30,7 @@ const TodoContainer = () => {
 
   return (
     <div className='flex flex-col	justify-between	bg-white h-96'>
-      <TodoLists tasks={tasks} />
+      <TodoLists tasks={tasks} handleRemoveTask={handleRemoveTask} />
       <AddTodoList handleAddTask={handleAddTask} />
     </div>
   )

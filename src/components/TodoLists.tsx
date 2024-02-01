@@ -1,10 +1,11 @@
 import { TrashIcon } from '@heroicons/react/24/solid'
 
-interface TasksProps {
+interface TodoListsProps {
   tasks: string[]
+  handleRemoveTask: (index: number) => void
 }
 
-const TodoLists: React.FC<TasksProps> = ({ tasks }) => {
+const TodoLists: React.FC<TodoListsProps> = ({ tasks, handleRemoveTask }) => {
   return (
     <ul className='mt-2'>
       {tasks.map((task, index) => (
@@ -19,7 +20,10 @@ const TodoLists: React.FC<TasksProps> = ({ tasks }) => {
             <label htmlFor={index.toString()}>{task}</label>
           </div>
           <div>
-            <TrashIcon className='h-4 w-4 text-zinc-500' />
+            <TrashIcon
+              className='h-4 w-4 text-zinc-500 cursor-pointer'
+              onClick={() => handleRemoveTask(index)}
+            />
           </div>
         </li>
       ))}
