@@ -1,11 +1,22 @@
 import { TrashIcon } from '@heroicons/react/24/solid'
 
+interface Task {
+  // id: number
+  text: string
+  completed: boolean
+}
+
 interface TodoListsProps {
-  tasks: string[]
+  tasks: Task[]
+  handleCheckedChange: (index: number) => void
   handleRemoveTask: (index: number) => void
 }
 
-const TodoLists: React.FC<TodoListsProps> = ({ tasks, handleRemoveTask }) => {
+const TodoLists: React.FC<TodoListsProps> = ({
+  tasks,
+  handleCheckedChange,
+  handleRemoveTask,
+}) => {
   return (
     <ul className='mt-2'>
       {tasks.map((task, index) => (
@@ -13,11 +24,13 @@ const TodoLists: React.FC<TodoListsProps> = ({ tasks, handleRemoveTask }) => {
           <div className='flex items-center'>
             <input
               type='checkbox'
+              checked={task.completed}
+              onChange={() => handleCheckedChange(index)}
               id={index.toString()}
               name={index.toString()}
               className='form-checkbox mr-2'
             />
-            <label htmlFor={index.toString()}>{task}</label>
+            <label htmlFor={index.toString()}>{task.text}</label>
           </div>
           <div>
             <TrashIcon
