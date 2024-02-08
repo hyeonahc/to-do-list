@@ -7,19 +7,19 @@ interface Task {
 }
 
 interface TodoListsProps {
-  tasks: Task[]
+  filteredTasks: Task[]
   handleCheckedChange: (index: number) => void
   handleRemoveTask: (index: number) => void
 }
 
 const TodoLists: React.FC<TodoListsProps> = ({
-  tasks,
+  filteredTasks,
   handleCheckedChange,
   handleRemoveTask,
 }) => {
   return (
     <ul className='basis-10/12 mt-2'>
-      {tasks.map((task, index) => (
+      {filteredTasks.map((task, index) => (
         <li key={index} className='flex justify-between items-center m-3'>
           <div className='flex items-center'>
             <input

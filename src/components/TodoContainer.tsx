@@ -56,6 +56,21 @@ const TodoContainer = () => {
     // test(indexToClick)
   }
 
+  const filteredTasks = () => {
+    const activeMenu = taskStatusMenus.find(menu => menu.text === 'Active')
+    const completedMenu = taskStatusMenus.find(
+      menu => menu.text === 'Completed'
+    )
+
+    if (activeMenu && activeMenu.clicked) {
+      return tasks.filter(task => !task.completed)
+    } else if (completedMenu && completedMenu.clicked) {
+      return tasks.filter(task => task.completed)
+    } else {
+      return tasks
+    }
+  }
+
   // const test = (indexToClick: number) => {
   //   taskStatusMenus.map((task, index) => {
   //     if (index === indexToClick) {
@@ -128,7 +143,7 @@ const TodoContainer = () => {
     <div className='flex flex-col	bg-white h-96'>
       <TopBar taskStatusMenus={taskStatusMenus} clickMenu={clickMenu} />
       <TodoLists
-        tasks={tasks}
+        filteredTasks={filteredTasks()}
         handleCheckedChange={handleCheckedChange}
         handleRemoveTask={handleRemoveTask}
       />
