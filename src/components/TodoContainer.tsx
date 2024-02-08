@@ -1,6 +1,12 @@
 import { useEffect, useState } from 'react'
 import AddTodoList from './AddTodoList'
 import TodoLists from './TodoLists'
+import TopBar from './TopBar'
+
+interface Menu {
+  text: string
+  clicked: boolean
+}
 
 // Q: id 값을 넣는게 더 좋은 방법인가요? id값을 넣어도 수정할 데이터는 index로 찾는게 편해서 잘 쓰지 않게됩니다. 현업에서는 어떤 방식으로 사용하나요?
 interface Task {
@@ -10,21 +16,57 @@ interface Task {
 }
 
 const TodoContainer = () => {
+  const [taskStatusMenus, setTaskStatusMenus] = useState<Menu[]>([
+    {
+      text: 'All',
+      clicked: true,
+    },
+    {
+      text: 'Active',
+      clicked: false,
+    },
+    {
+      text: 'Completed',
+      clicked: false,
+    },
+  ])
   const [tasks, setTasks] = useState<Task[]>([])
 
-  const handleAddTask = (newTask: string): void => {
-    if (newTask.trim() !== '') {
-      setTasks((prevTasks: Task[]) => {
-        const newTaskObject: Task = {
-          text: newTask,
-          completed: false,
-        }
-        const newTasks = [...prevTasks, newTaskObject]
-        localStorage.setItem('tasks', JSON.stringify(newTasks))
-        return newTasks
-      })
-    }
+  // Q: 이렇게 코드를 간결화하는 작업은 어떻게 하면 늘까요?
+  // 기존에 짠 복잡한 코드
+  // const clickMenu = (indexToClick: number) => {
+  //   setTaskStatusMenus(prevMenus => prevMenus.map((menu, index) => {
+  //       if (menu.clicked === true) {
+  //         return { ...menu, clicked: false }
+  //       } else if (index === indexToClick) {
+  //         return { ...menu, clicked: true }
+  //       }
+  //       return menu
+  //     })
+  //   )
+  // }
+
+  const clickMenu = (indexToClick: number) => {
+    setTaskStatusMenus(prevMenus =>
+      prevMenus.map((menu, index) => ({
+        ...menu,
+        clicked: index === indexToClick,
+      }))
+    )
+    // test(indexToClick)
   }
+
+  // const test = (indexToClick: number) => {
+  //   taskStatusMenus.map((task, index) => {
+  //     if (index === indexToClick) {
+  //       if (task.text === 'Active') {
+  //         console.log('Active')
+  //       } else if (task.text === 'Completed') {
+  //         console.log('Completed')
+  //       }
+  //     }
+  //   })
+  // }
 
   const handleCheckedChange = (indexToToggle: number) => {
     // Q: state를 업데이트할때 어떤 방법이 더 나은 방법인가요?
@@ -59,7 +101,23 @@ const TodoContainer = () => {
     localStorage.setItem('tasks', JSON.stringify(newTasks))
   }
 
+  const handleAddTask = (newTask: string): void => {
+    if (newTask.trim() !== '') {
+      setTasks((prevTasks: Task[]) => {
+        const newTaskObject: Task = {
+          text: newTask,
+          completed: false,
+        }
+        const newTasks = [...prevTasks, newTaskObject]
+        localStorage.setItem('tasks', JSON.stringify(newTasks))
+        return newTasks
+      })
+    }
+  }
+
   useEffect(() => {
+    localStorage.setItem('menus', JSON.stringify(taskStatusMenus))
+
     const getStoredTasks = localStorage.getItem('tasks')
     if (getStoredTasks) {
       setTasks(JSON.parse(getStoredTasks))
@@ -67,7 +125,8 @@ const TodoContainer = () => {
   }, [])
 
   return (
-    <div className='flex flex-col	justify-between	bg-white h-96'>
+    <div className='flex flex-col	bg-white h-96'>
+      <TopBar taskStatusMenus={taskStatusMenus} clickMenu={clickMenu} />
       <TodoLists
         tasks={tasks}
         handleCheckedChange={handleCheckedChange}

@@ -18,7 +18,7 @@ const TodoLists: React.FC<TodoListsProps> = ({
   handleRemoveTask,
 }) => {
   return (
-    <ul className='mt-2'>
+    <ul className='basis-10/12 mt-2'>
       {tasks.map((task, index) => (
         <li key={index} className='flex justify-between items-center m-3'>
           <div className='flex items-center'>
