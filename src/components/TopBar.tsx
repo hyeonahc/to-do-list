@@ -1,16 +1,7 @@
 import { MoonIcon, SunIcon } from '@heroicons/react/24/outline'
+import { ITopBarProps } from '../types/type'
 
-interface Menu {
-  text: string
-  clicked: boolean
-}
-
-interface TopBarProps {
-  taskStatusMenus: Menu[]
-  clickMenu: (index: number) => void
-}
-
-const TopBar: React.FC<TopBarProps> = ({ taskStatusMenus, clickMenu }) => {
+const TopBar = ({ taskStatusMenus, clickMenu }: ITopBarProps) => {
   return (
     <div className='bg-lightgrey flex justify-between p-3 rounded-t-lg'>
       <div>

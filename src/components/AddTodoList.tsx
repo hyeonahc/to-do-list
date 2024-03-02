@@ -1,10 +1,7 @@
 import { ChangeEvent, useState } from 'react'
+import { IAddTodoListProps } from '../types/type'
 
-interface AddTodoListProps {
-  handleAddTask: (newTask: string) => void
-}
-
-const AddTodoList: React.FC<AddTodoListProps> = ({ handleAddTask }) => {
+const AddTodoList = ({ handleAddTask }: IAddTodoListProps) => {
   const [inputValue, setInputValue] = useState<string>('')
 
   const handleInputChange = (e: ChangeEvent<HTMLInputElement>) => {

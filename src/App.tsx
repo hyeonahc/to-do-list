@@ -1,6 +1,6 @@
 import TodoContainer from './components/TodoContainer'
 
-const App: React.FC = () => {
+const App = () => {
   return (
     <div className='h-screen bg-background font-inter'>
       <div className='w-96 pt-20 mx-auto'>
