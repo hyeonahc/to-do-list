@@ -37,13 +37,14 @@ const TodoContainer = () => {
       menu => menu.text === 'Completed'
     )
 
+    // Create three if statements for early return
     if (activeMenu && activeMenu.clicked) {
       return tasks.filter(task => !task.completed)
-    } else if (completedMenu && completedMenu.clicked) {
-      return tasks.filter(task => task.completed)
-    } else {
-      return tasks
     }
+    if (completedMenu && completedMenu.clicked) {
+      return tasks.filter(task => task.completed)
+    }
+    return tasks
   }
 
   const handleCheckedChange = (indexToToggle: number) => {
