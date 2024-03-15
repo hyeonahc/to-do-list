@@ -6,12 +6,14 @@ interface IMenu {
 interface ITask {
   id: string
   text: string
+  isEditing: boolean
   completed: boolean
 }
 
 interface ITodoListsProps {
   filteredTasks: ITask[]
   handleCheckedChange: (index: number) => void
+  handleEditTask: (id: string) => void
   handleRemoveTask: (index: number) => void
 }
 

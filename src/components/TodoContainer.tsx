@@ -6,6 +6,7 @@ import TodoLists from './TodoLists'
 import TopBar from './TopBar'
 
 const TodoContainer = () => {
+  // Change to Object
   const [taskStatusMenus, setTaskStatusMenus] = useState<IMenu[]>([
     {
       text: 'All',
@@ -47,11 +48,25 @@ const TodoContainer = () => {
     return tasks
   }
 
+  // Use id to compare data
   const handleCheckedChange = (indexToToggle: number) => {
     setTasks(prevTasks => {
       const newTasks = prevTasks.map((task, index) => {
         if (index === indexToToggle) {
           return { ...task, completed: !task.completed }
+        }
+        return task
+      })
+      localStorage.setItem('tasks', JSON.stringify(newTasks))
+      return newTasks
+    })
+  }
+
+  const handleEditTask = (idToEdit: string): void => {
+    setTasks(prevTasks => {
+      const newTasks = prevTasks.map(task => {
+        if (task.id === idToEdit) {
+          return { ...task, isEditing: !task.isEditing }
         }
         return task
       })
@@ -72,6 +87,7 @@ const TodoContainer = () => {
         const newTaskObject: ITask = {
           id: getNanoId(),
           text: newTask,
+          isEditing: false,
           completed: false,
         }
         const newTasks = [...prevTasks, newTaskObject]
@@ -94,6 +110,7 @@ const TodoContainer = () => {
       <TodoLists
         filteredTasks={filteredTasks()}
         handleCheckedChange={handleCheckedChange}
+        handleEditTask={handleEditTask}
         handleRemoveTask={handleRemoveTask}
       />
       <AddTodoList handleAddTask={handleAddTask} />
