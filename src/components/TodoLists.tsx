@@ -1,4 +1,5 @@
 import { PencilSquareIcon, TrashIcon } from '@heroicons/react/24/solid'
+import { ChangeEvent, useState } from 'react'
 import { ITodoListsProps } from '../types/type'
 import { getNanoId } from '../util/getNanoId'
 
@@ -13,14 +14,18 @@ const TodoLists = ({
   handleCheckedChange,
   handleEditTask,
   handleRemoveTask,
+  handleEditAndSaveTask,
 }: ITodoListsProps) => {
+  const [newText, setnNewText] = useState('')
+
+  const getNewText = (e: ChangeEvent<HTMLInputElement>) => {
+    setnNewText(e.target.value)
+  }
+
   return (
     <ul className='basis-10/12 mt-2'>
       {filteredTasks.map((task, index) => (
-        <li
-          key={`list-${index}`}
-          className='flex justify-between items-center m-3'
-        >
+        <li key={`list-${index}`} className='m-3'>
           {!task.isEditing ? (
             <div className='flex items-center justify-between w-full'>
               <div className='flex items-center'>
@@ -29,12 +34,12 @@ const TodoLists = ({
                   checked={task.completed}
                   onChange={() => handleCheckedChange(index)}
                   id={`checkbox-${index}`}
-                  name={inputId}
+                  name={`checkbox-${index}`}
                   className='form-checkbox mr-2'
                 />
-                <label htmlFor={inputId}>{task.text}</label>
+                <label htmlFor={`checkbox-${index}`}>{task.text}</label>
               </div>
-              <div className='flex gap-1'>
+              <div className='flex justify-end gap-1'>
                 <PencilSquareIcon
                   className='h-4 w-4 text-zinc-500 cursor-pointer'
                   onClick={() => handleEditTask(task.id)}
@@ -46,7 +51,22 @@ const TodoLists = ({
               </div>
             </div>
           ) : (
-            <div>Edit</div>
+            <div className='flex gap-5'>
+              <input
+                type='text'
+                onChange={getNewText}
+                id={`edit-input-${index}`}
+                name={`edit-input-${index}`}
+                className='block w-full rounded-md border-0 py-1 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6'
+                placeholder={task.text}
+              />
+              <button
+                className='border-2 border-primary rounded px-2 py-0 text-primary'
+                onClick={() => handleEditAndSaveTask(task.id, newText)}
+              >
+                Save
+              </button>
+            </div>
           )}
         </li>
       ))}

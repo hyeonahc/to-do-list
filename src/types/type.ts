@@ -15,6 +15,7 @@ interface ITodoListsProps {
   handleCheckedChange: (index: number) => void
   handleEditTask: (id: string) => void
   handleRemoveTask: (index: number) => void
+  handleEditAndSaveTask: (id: string, newText: string) => void
 }
 
 interface IAddTodoListProps {

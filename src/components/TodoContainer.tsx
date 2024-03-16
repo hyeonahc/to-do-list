@@ -62,7 +62,7 @@ const TodoContainer = () => {
     })
   }
 
-  const handleEditTask = (idToEdit: string): void => {
+  const handleEditTask = (idToEdit: string) => {
     setTasks(prevTasks => {
       const newTasks = prevTasks.map(task => {
         if (task.id === idToEdit) {
@@ -75,13 +75,27 @@ const TodoContainer = () => {
     })
   }
 
-  const handleRemoveTask = (indexToRemove: number): void => {
+  const handleRemoveTask = (indexToRemove: number) => {
     const newTasks = tasks.filter((_, index) => index !== indexToRemove)
     setTasks(newTasks)
     localStorage.setItem('tasks', JSON.stringify(newTasks))
   }
 
-  const handleAddTask = (newTask: string): void => {
+  const handleEditAndSaveTask = (idToEditAndSave: string, newText: string) => {
+    setTasks(prevTasks => {
+      const newTasks = prevTasks.map(task => {
+        if (task.id === idToEditAndSave) {
+          return { ...task, text: newText }
+        }
+        return task
+      })
+      localStorage.setItem('tasks', JSON.stringify(newTasks))
+      return newTasks
+    })
+    handleEditTask(idToEditAndSave)
+  }
+
+  const handleAddTask = (newTask: string) => {
     if (newTask.trim() !== '') {
       setTasks((prevTasks: ITask[]) => {
         const newTaskObject: ITask = {
@@ -112,6 +126,7 @@ const TodoContainer = () => {
         handleCheckedChange={handleCheckedChange}
         handleEditTask={handleEditTask}
         handleRemoveTask={handleRemoveTask}
+        handleEditAndSaveTask={handleEditAndSaveTask}
       />
       <AddTodoList handleAddTask={handleAddTask} />
     </div>
