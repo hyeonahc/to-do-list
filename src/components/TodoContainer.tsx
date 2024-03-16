@@ -48,11 +48,10 @@ const TodoContainer = () => {
     return tasks
   }
 
-  // Use id to compare data
-  const handleCheckedChange = (indexToToggle: number) => {
+  const handleCheckedChange = (idToToggle: string) => {
     setTasks(prevTasks => {
-      const newTasks = prevTasks.map((task, index) => {
-        if (index === indexToToggle) {
+      const newTasks = prevTasks.map(task => {
+        if (task.id === idToToggle) {
           return { ...task, completed: !task.completed }
         }
         return task
@@ -75,10 +74,12 @@ const TodoContainer = () => {
     })
   }
 
-  const handleRemoveTask = (indexToRemove: number) => {
-    const newTasks = tasks.filter((_, index) => index !== indexToRemove)
-    setTasks(newTasks)
-    localStorage.setItem('tasks', JSON.stringify(newTasks))
+  const handleRemoveTask = (idToRemove: string) => {
+    setTasks(prevTasks => {
+      const newTasks = prevTasks.filter(task => task.id !== idToRemove)
+      localStorage.setItem('tasks', JSON.stringify(newTasks))
+      return newTasks
+    })
   }
 
   const handleNewText = (

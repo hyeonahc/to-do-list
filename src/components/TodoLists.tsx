@@ -26,7 +26,7 @@ const TodoLists = ({
                 <input
                   type='checkbox'
                   checked={task.completed}
-                  onChange={() => handleCheckedChange(index)}
+                  onChange={() => handleCheckedChange(task.id)}
                   id={`checkbox-${index}`}
                   name={`checkbox-${index}`}
                   className='form-checkbox mr-2'
@@ -40,7 +40,7 @@ const TodoLists = ({
                 />
                 <TrashIcon
                   className='h-4 w-4 text-zinc-500 cursor-pointer'
-                  onClick={() => handleRemoveTask(index)}
+                  onClick={() => handleRemoveTask(task.id)}
                 />
               </div>
             </div>

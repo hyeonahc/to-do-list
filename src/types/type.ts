@@ -15,9 +15,9 @@ interface ITask {
 
 interface ITodoListsProps {
   filteredTasks: ITask[]
-  handleCheckedChange: (index: number) => void
+  handleCheckedChange: (id: string) => void
   handleEditTask: (id: string) => void
-  handleRemoveTask: (index: number) => void
+  handleRemoveTask: (id: string) => void
   handleNewText: (e: ChangeEvent<HTMLInputElement>, id: string) => void
   handleEditAndSaveTask: (id: string) => void
 }
