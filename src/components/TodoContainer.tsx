@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react'
+import { ChangeEvent, useEffect, useState } from 'react'
 import { IMenu, ITask } from '../types/type'
 import { getNanoId } from '../util/getNanoId'
 import AddTodoList from './AddTodoList'
@@ -81,11 +81,28 @@ const TodoContainer = () => {
     localStorage.setItem('tasks', JSON.stringify(newTasks))
   }
 
-  const handleEditAndSaveTask = (idToEditAndSave: string, newText: string) => {
+  const handleNewText = (
+    e: ChangeEvent<HTMLInputElement>,
+    idToEdit: string
+  ) => {
+    console.log(e.target.value)
+    setTasks(prevTasks => {
+      const newTasks = prevTasks.map(task => {
+        if (task.id === idToEdit) {
+          return { ...task, newText: e.target.value }
+        }
+        return task
+      })
+      localStorage.setItem('tasks', JSON.stringify(newTasks))
+      return newTasks
+    })
+  }
+
+  const handleEditAndSaveTask = (idToEditAndSave: string) => {
     setTasks(prevTasks => {
       const newTasks = prevTasks.map(task => {
         if (task.id === idToEditAndSave) {
-          return { ...task, text: newText }
+          return { ...task, text: task.newText }
         }
         return task
       })
@@ -102,6 +119,7 @@ const TodoContainer = () => {
           id: getNanoId(),
           text: newTask,
           isEditing: false,
+          newText: '',
           completed: false,
         }
         const newTasks = [...prevTasks, newTaskObject]
@@ -126,6 +144,7 @@ const TodoContainer = () => {
         handleCheckedChange={handleCheckedChange}
         handleEditTask={handleEditTask}
         handleRemoveTask={handleRemoveTask}
+        handleNewText={handleNewText}
         handleEditAndSaveTask={handleEditAndSaveTask}
       />
       <AddTodoList handleAddTask={handleAddTask} />

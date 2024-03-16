@@ -1,5 +1,4 @@
 import { PencilSquareIcon, TrashIcon } from '@heroicons/react/24/solid'
-import { ChangeEvent, useState } from 'react'
 import { ITodoListsProps } from '../types/type'
 import { getNanoId } from '../util/getNanoId'
 
@@ -14,14 +13,9 @@ const TodoLists = ({
   handleCheckedChange,
   handleEditTask,
   handleRemoveTask,
+  handleNewText,
   handleEditAndSaveTask,
 }: ITodoListsProps) => {
-  const [newText, setnNewText] = useState('')
-
-  const getNewText = (e: ChangeEvent<HTMLInputElement>) => {
-    setnNewText(e.target.value)
-  }
-
   return (
     <ul className='basis-10/12 mt-2'>
       {filteredTasks.map((task, index) => (
@@ -54,15 +48,16 @@ const TodoLists = ({
             <div className='flex gap-5'>
               <input
                 type='text'
-                onChange={getNewText}
+                onChange={e => handleNewText(e, task.id)}
                 id={`edit-input-${index}`}
                 name={`edit-input-${index}`}
                 className='block w-full rounded-md border-0 py-1 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6'
                 placeholder={task.text}
+                autoFocus
               />
               <button
                 className='border-2 border-primary rounded px-2 py-0 text-primary'
-                onClick={() => handleEditAndSaveTask(task.id, newText)}
+                onClick={() => handleEditAndSaveTask(task.id)}
               >
                 Save
               </button>
