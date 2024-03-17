@@ -1,8 +1,11 @@
 import { ChangeEvent } from 'react'
 
 interface IMenu {
-  text: string
-  clicked: boolean
+  [key: string]: {
+    text: string
+    clicked: boolean
+    id: string
+  }
 }
 
 interface ITask {
@@ -27,8 +30,8 @@ interface IAddTodoListProps {
 }
 
 interface ITopBarProps {
-  taskStatusMenus: IMenu[]
-  clickMenu: (index: number) => void
+  Menus: IMenu
+  clickMenu: (id: string) => void
 }
 
 export type { IAddTodoListProps, IMenu, ITask, ITodoListsProps, ITopBarProps }

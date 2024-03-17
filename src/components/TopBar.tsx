@@ -1,7 +1,7 @@
 import { MoonIcon, SunIcon } from '@heroicons/react/24/outline'
 import { ITopBarProps } from '../types/type'
 
-const TopBar = ({ taskStatusMenus, clickMenu }: ITopBarProps) => {
+const TopBar = ({ Menus, clickMenu }: ITopBarProps) => {
   return (
     <div className='bg-lightgrey flex justify-between p-3 rounded-t-lg'>
       <div>
@@ -9,17 +9,17 @@ const TopBar = ({ taskStatusMenus, clickMenu }: ITopBarProps) => {
         <MoonIcon className='h-6 w-6 text-zinc-500 hidden' />
       </div>
       <div className='flex gap-x-3 text-primaryWithOpacity'>
-        {taskStatusMenus.map((menu, index) => (
+        {Object.keys(Menus).map(menuKey => (
           <div
-            key={index}
+            key={Menus[menuKey].id}
             className={
-              menu.clicked
+              Menus[menuKey].clicked
                 ? 'cursor-pointer text-primary border-b-2 border-primary'
                 : 'cursor-pointer'
             }
-            onClick={() => clickMenu(index)}
+            onClick={() => clickMenu(Menus[menuKey].id)}
           >
-            {menu.text}
+            {menuKey}
           </div>
         ))}
       </div>

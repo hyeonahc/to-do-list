@@ -5,44 +5,45 @@ import AddTodoList from './AddTodoList'
 import TodoLists from './TodoLists'
 import TopBar from './TopBar'
 
+const initialMenus: IMenu = {
+  all: {
+    text: 'All',
+    clicked: true,
+    id: getNanoId(),
+  },
+  active: {
+    text: 'Active',
+    clicked: false,
+    id: getNanoId(),
+  },
+  completed: {
+    text: 'Completed',
+    clicked: false,
+    id: getNanoId(),
+  },
+}
+
 const TodoContainer = () => {
-  // Change to Object
-  const [taskStatusMenus, setTaskStatusMenus] = useState<IMenu[]>([
-    {
-      text: 'All',
-      clicked: true,
-    },
-    {
-      text: 'Active',
-      clicked: false,
-    },
-    {
-      text: 'Completed',
-      clicked: false,
-    },
-  ])
+  const [Menus, setMenus] = useState<IMenu>(initialMenus)
   const [tasks, setTasks] = useState<ITask[]>([])
 
-  const clickMenu = (indexToClick: number) => {
-    setTaskStatusMenus(prevMenus =>
-      prevMenus.map((menu, index) => ({
-        ...menu,
-        clicked: index === indexToClick,
-      }))
-    )
+  const clickMenu = (idToClick: string) => {
+    const MenusCopy = { ...Menus }
+    Object.keys(Menus).map(menuKey => {
+      if (MenusCopy[menuKey].id === idToClick) {
+        MenusCopy[menuKey].clicked = true
+      } else {
+        MenusCopy[menuKey].clicked = false
+      }
+    })
+    setMenus(MenusCopy)
   }
 
   const filteredTasks = () => {
-    const activeMenu = taskStatusMenus.find(menu => menu.text === 'Active')
-    const completedMenu = taskStatusMenus.find(
-      menu => menu.text === 'Completed'
-    )
-
-    // Create three if statements for early return
-    if (activeMenu && activeMenu.clicked) {
+    if (Menus['active'].clicked) {
       return tasks.filter(task => !task.completed)
     }
-    if (completedMenu && completedMenu.clicked) {
+    if (Menus['completed'].clicked) {
       return tasks.filter(task => task.completed)
     }
     return tasks
@@ -139,7 +140,7 @@ const TodoContainer = () => {
 
   return (
     <div className='flex flex-col	bg-white h-96'>
-      <TopBar taskStatusMenus={taskStatusMenus} clickMenu={clickMenu} />
+      <TopBar Menus={Menus} clickMenu={clickMenu} />
       <TodoLists
         filteredTasks={filteredTasks()}
         handleCheckedChange={handleCheckedChange}
